@@ -195,7 +195,7 @@
                 <div class="form-group">
                     <label for="reference_number">Numéro de Référence</label>
                     <input type="text" name="reference_number" id="reference_number"
-                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" >
                 </div>
 
                 <!-- Object Field -->

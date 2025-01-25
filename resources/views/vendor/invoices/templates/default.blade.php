@@ -58,7 +58,7 @@
         }
 
         .header .lab-info {
-            font-size: 12px;
+            font-size: 10px;
             color: #000;
             margin-top: -5%;
             text-align: center;
@@ -166,8 +166,10 @@
                     <img width="120" height="90" src="{{ asset('image.png') }}" alt="Laboratory Logo">
                 </div>
                 <div class="lab-info">
-                    <p>Laboratoire Public d'Essais et d'Etudes</p>
-                    <p>L.P. E. E - C. E. R. E. P</p>
+                    <b>Laboratoire Public d'Essais et d'Etudes</b><br>
+                    L.P. E. E - C. E. R. E. P <br>
+                    CROISSEMENT ROUTE 106-107 TIT MELLIL CASA <br>
+                    TEL : 0522-69-90-10   <span>    </span>   FAX : 0522-69-90-34</p>
                 </div>
             </div>
             <div class="reference">
@@ -215,8 +217,8 @@
                 <tr>
                     <th>Désignation</th>
                     <th class="text-center">Quantité</th>
-                    <th class="text-right">Prix Unitaire (DH/HT)</th>
-                    <th class="text-right">Prix Total (DH)</th>
+                    <th class="text-right">Prix Unitaire (MAD/HT)</th>
+                    <th class="text-right">Prix Total (MAD)</th>
                 </tr>
             </thead>
             <tbody>

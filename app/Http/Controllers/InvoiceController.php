@@ -10,6 +10,9 @@ use Carbon\Carbon;
 use LaravelDaily\Invoices\Invoice as PdfInvoice;
 use LaravelDaily\Invoices\Classes\Party;
 use App\Models\InvoiceItem;
+use PhpOffice\PhpWord\PhpWord;
+use PhpOffice\PhpWord\IOFactory;
+use PhpOffice\PhpWord\Shared\Html;
 
 class InvoiceController extends Controller
 {
@@ -112,7 +115,7 @@ class InvoiceController extends Controller
             'items.*.quantity' => 'required|integer|min:1',
             'object' => 'nullable|string|max:255', // Validate object
             'responsable' => 'nullable|string|max:255', // Validate responsable
-            'reference_number' => 'required|string|unique:invoices,reference_number', // Ensure reference_number is required and unique
+            'reference_number' => 'nullable|string|unique:invoices,reference_number', // Ensure reference_number is required and unique
             'tele' => 'nullable|string|max:20', // Validate tele (assuming it's a phone number)
             'chantier' => 'nullable|string|max:255', // Validate chantier
         ]);
