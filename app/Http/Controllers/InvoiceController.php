@@ -29,7 +29,7 @@ class InvoiceController extends Controller
     {
         $invoice = Invoice::with(['client', 'items.product.category'])->findOrFail($id);
         $invoiceDate1 = \Carbon\Carbon::parse($invoice->invoice_date)->format('d/m/Y');
-    
+
         // Buyer (Client)
         $buyer = new \LaravelDaily\Invoices\Classes\Party([
             'name' => $invoice->client->name,
@@ -40,25 +40,27 @@ class InvoiceController extends Controller
             'object' => $invoice->object,
             'numref' => $invoice->reference_number,
             'responsable' => $invoice->responsable,
+            'tele' => $invoice->tele,
+            'chantier' => $invoice->chantier,
             'date' => $invoiceDate1,
         ]);
-    
+
         $invoiceDate = \Carbon\Carbon::parse($invoice->invoice_date);
-    
+
         // Group items by category
         $groupedItems = [];
         foreach ($invoice->items as $item) {
             // Force valid numeric values
             $quantity = (float) ($item->quantity ?? 1); // Default to 1 if null
             $unitPrice = (float) ($item->unit_price ?? 0.0); // Default to 0 if null
-            
+
             $categoryName = $item->product->category->name ?? 'Non catégorisé';
-            
+
             $groupedItems[$categoryName][] = \LaravelDaily\Invoices\Classes\InvoiceItem::make($item->product->name)
                 ->pricePerUnit($unitPrice)
                 ->quantity($quantity);
         }
-    
+
         // Generate PDF Invoice
         $pdfInvoice = \LaravelDaily\Invoices\Invoice::make('invoice')
             ->series('INV')
@@ -74,23 +76,18 @@ class InvoiceController extends Controller
             ->currencyFormat('{SYMBOL}{VALUE}')
             ->notes('Thank you for your business!')
             ->logo(public_path('vendor/invoices/sample-logo.png'));
-    
+
         // Add grouped items to the invoice
         foreach ($groupedItems as $categoryName => $items) {
             // Add category header (with quantity=0 to avoid PricingService errors)
-            $pdfInvoice->addItem(
-                \LaravelDaily\Invoices\Classes\InvoiceItem::make($categoryName)
-                    ->title($categoryName)
-                    ->pricePerUnit(0)
-                    ->quantity(0)
-            );
-    
+            $pdfInvoice->addItem(\LaravelDaily\Invoices\Classes\InvoiceItem::make($categoryName)->title($categoryName)->pricePerUnit(0)->quantity(0));
+
             // Add products under the category
             foreach ($items as $item) {
                 $pdfInvoice->addItem($item);
             }
         }
-    
+
         // Stream the invoice to the browser
         return $pdfInvoice->stream();
     }
@@ -113,9 +110,11 @@ class InvoiceController extends Controller
             'items' => 'required|array',
             'items.*.product_id' => 'required|exists:products,id',
             'items.*.quantity' => 'required|integer|min:1',
-            'object' => 'required|string|max:255', // Validate object
-            'responsable' => 'required|string|max:255', // Validate responsable
-            'reference_number' => 'required|string|unique:invoices,reference_number',
+            'object' => 'nullable|string|max:255', // Validate object
+            'responsable' => 'nullable|string|max:255', // Validate responsable
+            'reference_number' => 'required|string|unique:invoices,reference_number', // Ensure reference_number is required and unique
+            'tele' => 'nullable|string|max:20', // Validate tele (assuming it's a phone number)
+            'chantier' => 'nullable|string|max:255', // Validate chantier
         ]);
 
         // Calculate the total amount
@@ -133,6 +132,8 @@ class InvoiceController extends Controller
             'total_amount' => $totalAmount,
             'object' => $request->object, // Add object
             'responsable' => $request->responsable, // Add responsable
+            'tele' => $request->tele, // Add tele
+            'chantier' => $request->chantier, // Add chantier
         ]);
         $invoice->save(); // Save the invoice to the database
 

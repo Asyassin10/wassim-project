@@ -191,27 +191,46 @@
             @csrf
 
             <div class="form-content">
+                <!-- Reference Number Field -->
                 <div class="form-group">
                     <label for="reference_number">Numéro de Référence</label>
                     <input type="text" name="reference_number" id="reference_number"
                         class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
                 </div>
+
                 <!-- Object Field -->
                 <div class="form-group">
                     <label for="object">Objet</label>
-                    <input type="text" name="object" id="object" placeholder="Objet de la facture" required>
+                    <input type="text" name="object" id="object" placeholder="Objet de la facture"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                 </div>
 
                 <!-- Responsable Field -->
                 <div class="form-group">
                     <label for="responsable">Responsable</label>
-                    <input type="text" name="responsable" id="responsable" placeholder="Nom du responsable" required>
+                    <input type="text" name="responsable" id="responsable" placeholder="Nom du responsable"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                </div>
+
+                <!-- Tele Field -->
+                <div class="form-group">
+                    <label for="tele">Tél</label>
+                    <input type="text" name="tele" id="tele" placeholder="Tél"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
+                </div>
+
+                <!-- Chantier Field -->
+                <div class="form-group">
+                    <label for="chantier">Chantier</label>
+                    <input type="text" name="chantier" id="chantier" placeholder="Chantier"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm">
                 </div>
 
                 <!-- Client Field -->
                 <div class="form-group">
                     <label for="client_id">Client</label>
-                    <select name="client_id" id="client_id" required>
+                    <select name="client_id" id="client_id"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
                         <option value="">Sélectionner un client</option>
                         @foreach ($clients as $client)
                             <option value="{{ $client->id }}">{{ $client->name }}</option>
@@ -222,7 +241,8 @@
                 <!-- Invoice Date Field -->
                 <div class="form-group">
                     <label for="invoice_date">Date de Facture</label>
-                    <input type="date" name="invoice_date" id="invoice_date" required>
+                    <input type="date" name="invoice_date" id="invoice_date"
+                        class="mt-1 block w-full rounded-md border-gray-300 shadow-sm" required>
                 </div>
 
                 <!-- Items Section -->
@@ -245,6 +265,8 @@
                     </div>
                 </div>
             </div>
+
+            <!-- Submit Button -->
             <div class="form-footer">
                 <button type="submit" id="submit-button" class="btn btn-submit">Créer la Facture</button>
             </div>
@@ -284,22 +306,46 @@
                 width: '100%'
             });
 
-            // Reinitialize Select2 when a new item is added
+            // Function to disable already selected products
+            function disableSelectedProducts() {
+                const selectedProducts = new Set();
+                document.querySelectorAll('select[name^="items"]').forEach(select => {
+                    if (select.value) {
+                        selectedProducts.add(select.value);
+                    }
+                });
+
+                document.querySelectorAll('select[name^="items"]').forEach(select => {
+                    Array.from(select.options).forEach(option => {
+                        if (option.value && selectedProducts.has(option.value) && option.value !==
+                            select.value) {
+                            option.disabled = true;
+                        } else {
+                            option.disabled = false;
+                        }
+                    });
+                });
+            }
+
+            // Call the function initially
+            disableSelectedProducts();
+
+            // Reinitialize Select2 and disable selected products when a new item is added
             function addItem() {
                 const container = document.getElementById('items-container');
                 const itemCount = container.children.length;
                 const newItem = document.createElement('div');
                 newItem.classList.add('item');
                 newItem.innerHTML = `
-                    <select name="items[${itemCount}][product_id]" required>
-                        <option value="">Sélectionner un produit</option>
-                        @foreach ($products as $product)
-                            <option value="{{ $product->id }}">{{ $product->name }} - <span class="price">{{ $product->price }} MAD</span></option>
-                        @endforeach
-                    </select>
-                    <input type="number" name="items[${itemCount}][quantity]" placeholder="Quantité" min="1" required>
-                    <button type="button" class="btn btn-remove" onclick="removeItem(this)">Supprimer</button>
-                `;
+            <select name="items[${itemCount}][product_id]" required>
+                <option value="">Sélectionner un produit</option>
+                @foreach ($products as $product)
+                    <option value="{{ $product->id }}">{{ $product->name }} - <span class="price">{{ $product->price }} MAD</span></option>
+                @endforeach
+            </select>
+            <input type="number" name="items[${itemCount}][quantity]" placeholder="Quantité" min="1" required>
+            <button type="button" class="btn btn-remove" onclick="removeItem(this)">Supprimer</button>
+        `;
                 container.appendChild(newItem);
 
                 // Initialize Select2 for the new dropdown
@@ -308,15 +354,26 @@
                     allowClear: true,
                     width: '100%'
                 });
+
+                // Disable already selected products
+                disableSelectedProducts();
             }
 
             // Remove item function
             function removeItem(button) {
                 button.closest('.item').remove();
+                disableSelectedProducts(); // Re-enable options when an item is removed
             }
 
             // Attach addItem function to the button
             document.getElementById('add-item-button').addEventListener('click', addItem);
+
+            // Disable selected products when a product is selected
+            document.addEventListener('change', function(event) {
+                if (event.target && event.target.matches('select[name^="items"]')) {
+                    disableSelectedProducts();
+                }
+            });
         });
     </script>
 

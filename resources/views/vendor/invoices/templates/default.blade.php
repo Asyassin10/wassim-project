@@ -183,13 +183,30 @@
         <!-- Client Info -->
         <div class="client-info">
             <p class="client-name">Client : {{ $invoice->buyer->name }}</p>
-            @if ($invoice->buyer->email == null || $invoice->buyer->email  == "")
-            @else
-            <p class="client-name">E-mails : {{ $invoice->buyer->email }}</p>
+
+            @if (!empty($invoice->buyer->email))
+                <p class="client-name">E-mails : {{ $invoice->buyer->email }}</p>
             @endif
-            <p class="client-name">Objet : {{ $invoice->buyer->object }}</p>
-            <p class="client-name">N°Réf. : {{ $invoice->buyer->numref }}</p>
-            <p class="client-name">Responsable de dossier : {{ $invoice->buyer->responsable }}</p>
+
+            @if (!empty($invoice->buyer->object))
+                <p class="client-name">Objet : {{ $invoice->buyer->object }}</p>
+            @endif
+
+            @if (!empty($invoice->buyer->numref))
+                <p class="client-name">N°Réf. : {{ $invoice->buyer->numref }}</p>
+            @endif
+
+            @if (!empty($invoice->buyer->chantier))
+                <p class="client-name">chantier : {{ $invoice->buyer->chantier }}</p>
+            @endif
+
+            @if (!empty($invoice->buyer->tele))
+                <p class="client-name">Tél : {{ $invoice->buyer->tele }}</p>
+            @endif
+
+            @if (!empty($invoice->buyer->responsable))
+                <p class="client-name">Responsable de dossier : {{ $invoice->buyer->responsable }}</p>
+            @endif
         </div>
 
         <!-- Table -->
