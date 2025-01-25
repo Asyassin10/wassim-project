@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Client;
 use App\Models\Product;
@@ -15,8 +16,9 @@ class CheckController extends Controller
         $clientCount = Client::count();
         $productCount = Product::count();
         $invoiceCount = Invoice::count();
+        $categoryCount = Category::count();
 
-        return view('dashboard.index', compact('clientCount', 'productCount', 'invoiceCount'));
+        return view('dashboard.index', compact('clientCount', 'productCount', 'invoiceCount','categoryCount'));
     }
     // Check if a client exists
     public function checkClient(Request $request)

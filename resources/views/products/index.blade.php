@@ -14,7 +14,7 @@
 <body class="bg-gray-100">
     @include('navbar')
 
-    <div class=" w-100 ">
+    <div class="w-100">
         <!-- En-tête -->
         <div class="bg-white p-6 rounded-t-lg shadow-sm border-b border-gray-200 mt-10">
             <div class="flex justify-between items-center">
@@ -55,7 +55,8 @@
                         <tr class="bg-gray-50">
                             <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Nom</th>
                             <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Prix</th>
-                            <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Actions</th>
+                            <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider">Catégorie</th>
+                            <th class="py-3 px-6 text-left text-xs font-medium text-gray-500 uppercase tracking-wider"></th>
                         </tr>
                     </thead>
                     <tbody class="divide-y divide-gray-200">
@@ -65,7 +66,10 @@
                                     {{ $product->name }}
                                 </td>
                                 <td class="py-4 px-6 whitespace-nowrap text-sm text-gray-700">
-                                    {{ $product->price}} MAD
+                                    {{ $product->price }} MAD
+                                </td>
+                                <td class="py-4 px-6 whitespace-nowrap text-sm text-gray-700">
+                                    {{ $product->category->name ?? 'Non catégorisé' }}
                                 </td>
                                 <td class="py-4 px-6 whitespace-nowrap text-sm text-center">
                                     <a href="{{ route('products.edit', $product->id) }}" 

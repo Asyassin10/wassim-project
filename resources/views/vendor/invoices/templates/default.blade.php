@@ -1,73 +1,88 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Laboratory Quotation</title>
     <style>
+        /* Added category and product styling */
+        .category-header {
+            font-size: 14px !important;
+            font-weight: bold;
+            background-color: #f8f9fa !important;
+            padding: 8px !important;
+        }
+
+        .product-row td {
+            font-size: 12px !important;
+            padding-left: 25px !important;
+        }
+
+        /* Rest of existing styles */
         body {
             font-family: Arial, sans-serif;
             background-color: #ffffff;
             margin: 0;
-            padding: 0; /* Reduced padding */
-            font-size: 12px; /* Smaller font size */
+            padding: 0;
+            font-size: 12px;
         }
 
         .container {
             width: 100%;
-            max-width: 700px; /* Reduced max-width */
+            max-width: 700px;
             margin: 0 auto;
             background-color: #ffffff;
-            padding: 10px; /* Reduced padding */
-            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1); /* Lighter shadow */
+            padding: 10px;
+            box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
         }
 
         .header {
             margin-top: -5%;
-            border-bottom: 1px solid #000; /* Thinner border */
-            padding-bottom: 1px; /* Reduced padding */
-            margin-bottom: 1px; /* Reduced margin */
-            text-align: center; /* Center align header content */
+            border-bottom: 1px solid #000;
+            padding-bottom: 1px;
+            margin-bottom: 1px;
+            text-align: center;
         }
 
         .header .header-content {
             display: flex;
             flex-direction: column;
-            align-items: center; /* Center align items horizontally */
+            align-items: center;
         }
 
         .header .logo {
-            height: 40px; /* Smaller logo */
-            width: 120px; /* Smaller logo */
-            margin-bottom: 10px; /* Reduced margin */
+            height: 40px;
+            width: 120px;
+            margin-bottom: 10px;
         }
 
         .header .lab-info {
-            font-size: 12px; /* Smaller font size */
+            font-size: 12px;
             color: #000;
-            margin-top: -5%; /* Add some space between logo and text */
-            text-align: center; /* Center align text */
+            margin-top: -5%;
+            text-align: center;
         }
 
         .header .reference {
             text-align: right;
-            font-size: 12px; /* Smaller font size */
+            font-size: 12px;
             color: #000;
-            margin-top: 10px; /* Add some space between lab-info and reference */
+            margin-top: 10px;
         }
 
         .title {
             text-align: center;
-            font-size: 18px; /* Smaller font size */
+            font-size: 18px;
             font-weight: bold;
-            margin-bottom: 10px; /* Reduced margin */
+            margin-bottom: 10px;
         }
 
         .client-info {
             border: 1px solid #000;
-            padding: 5px; /* Reduced padding */
-            margin-bottom: 10px; /* Reduced margin */
-            font-size: 12px; /* Smaller font size */
+            padding: 5px;
+            margin-bottom: 10px;
+            font-size: 12px;
         }
 
         .client-info p {
@@ -81,14 +96,14 @@
         .table {
             width: 100%;
             border-collapse: collapse;
-            margin-bottom: 10px; /* Reduced margin */
-            font-size: 12px; /* Smaller font size */
+            margin-bottom: 10px;
+            font-size: 12px;
         }
 
         .table th,
         .table td {
             border: 1px solid #000;
-            padding: 5px; /* Reduced padding */
+            padding: 5px;
             text-align: left;
         }
 
@@ -97,35 +112,31 @@
             font-weight: bold;
         }
 
-        .table td {
-            font-size: 12px; /* Smaller font size */
-        }
-
         .table tfoot td {
             font-weight: bold;
         }
 
         .footer {
-            margin-top: 15px; /* Reduced margin */
+            margin-top: 15px;
             text-align: center;
-            font-size: 12px; /* Smaller font size */
+            font-size: 12px;
         }
 
         .footer .director {
             font-weight: bold;
-            margin-bottom: 5px; /* Reduced margin */
+            margin-bottom: 5px;
         }
 
         .footer .payment-terms {
-            margin-top: 10px; /* Reduced margin */
+            margin-top: 10px;
             border-top: 1px solid #000;
-            padding-top: 5px; /* Reduced padding */
+            padding-top: 5px;
         }
 
         .footer .notes {
-            font-size: 10px; /* Smaller font size */
+            font-size: 10px;
             color: #6b7280;
-            margin-top: 5px; /* Reduced margin */
+            margin-top: 5px;
         }
 
         .text-right {
@@ -145,13 +156,14 @@
         }
     </style>
 </head>
+
 <body>
     <div class="container">
         <!-- Header -->
         <div class="header">
             <div class="header-content">
                 <div class="logo">
-                    <img width="120" height="90" src="{{asset('image.png')}}" alt="Laboratory Logo">
+                    <img width="120" height="90" src="{{ asset('image.png') }}" alt="Laboratory Logo">
                 </div>
                 <div class="lab-info">
                     <p>Laboratoire Public d'Essais et d'Etudes</p>
@@ -170,10 +182,13 @@
 
         <!-- Client Info -->
         <div class="client-info">
-            <p class="client-name">Client  : {{ $invoice->buyer->name }}</p>
-            <p class="client-name">E-mail  : {{ $invoice->buyer->email }}</p>
-            <p class="client-name">Objet   : {{ $invoice->buyer->object }}</p>
-            <p class="client-name">N°Réf.  : {{ $invoice->buyer->numref }}</p>
+            <p class="client-name">Client : {{ $invoice->buyer->name }}</p>
+            @if ($invoice->buyer->email == null || $invoice->buyer->email  == "")
+            @else
+            <p class="client-name">E-mails : {{ $invoice->buyer->email }}</p>
+            @endif
+            <p class="client-name">Objet : {{ $invoice->buyer->object }}</p>
+            <p class="client-name">N°Réf. : {{ $invoice->buyer->numref }}</p>
             <p class="client-name">Responsable de dossier : {{ $invoice->buyer->responsable }}</p>
         </div>
 
@@ -188,13 +203,23 @@
                 </tr>
             </thead>
             <tbody>
-                @foreach($invoice->items as $item)
-                <tr>
-                    <td>{{ $item->title }}</td>
-                    <td class="text-center">{{ $item->quantity }}</td>
-                    <td class="text-right">{{ number_format($item->price_per_unit, 2) }} MAD</td>
-                    <td class="text-right">{{ number_format($item->sub_total_price, 2) }} MAD</td>
-                </tr>
+                @foreach ($invoice->items as $item)
+                    @if ($item->quantity == 0)
+                        <!-- Category Header -->
+                        <tr>
+                            <td colspan="4" class="category-header">
+                                {{ $item->title }}
+                            </td>
+                        </tr>
+                    @else
+                        <!-- Product Row -->
+                        <tr class="product-row">
+                            <td>{{ $item->title }}</td>
+                            <td class="text-center">{{ number_format($item->quantity, 0) }}</td>
+                            <td class="text-right">{{ number_format($item->price_per_unit, 2) }} MAD</td>
+                            <td class="text-right">{{ number_format($item->sub_total_price, 2) }} MAD</td>
+                        </tr>
+                    @endif
                 @endforeach
             </tbody>
             <tfoot>
@@ -221,19 +246,17 @@
             </div>
             <div class="payment-terms" style="text-align: left;">
                 <p>
-                    Modalité de paiement : 100 % à la commande </br>
-                    La date d'intervention sera fixée en commun accord avec le client </br>
-                    Le délai de remise des analyses des paramètres réalisées en interne est de 4 semaines.</br>
-                    * Paramètres sous-traités, le délai de remise de leurs résultats est de 07 semaines</br>
-                    Le rapport d'essai sera sous forme de bulletins d'analyses avec commentaire</br>
-                    Pièces jointes : - Références des méthodes d'analyses -conditions générales 
-                    
+                    Modalité de paiement : 100 % à la commande <br>
+                    La date d'intervention sera fixée en commun accord avec le client <br>
+                    Le délai de remise des analyses des paramètres réalisées en interne est de 4 semaines.<br>
+                    * Paramètres sous-traités, le délai de remise de leurs résultats est de 07 semaines<br>
+                    Le rapport d'essai sera sous forme de bulletins d'analyses avec commentaire<br>
+                    Pièces jointes : - Références des méthodes d'analyses -conditions générales
                 </p>
             </div>
-            <div class="notes">
-
-            </div>
+            <div class="notes"></div>
         </div>
     </div>
 </body>
+
 </html>

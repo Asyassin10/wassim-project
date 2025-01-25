@@ -30,7 +30,7 @@
             </div>
             <div class="mb-6">
                 <label for="email" class="block text-lg font-medium">Email</label>
-                <input type="email" name="email" id="email" class="mt-2 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500" required>
+                <input type="email" name="email" id="email" class="mt-2 block w-full rounded-lg border-gray-300 shadow-sm focus:ring-blue-500 focus:border-blue-500"  >
             </div>
             <button type="submit" class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-400">Créer le Client</button>
         </form>

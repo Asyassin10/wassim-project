@@ -1,5 +1,5 @@
 <!-- Barre de navigation -->
-<nav style="background-color: #266BB2" class=" shadow-md mt-0 h-24"> <!-- Changed background color to #266BB2 -->
+<nav style="background-color: #266BB2" class="shadow-md mt-0 h-24"> <!-- Changed background color to #266BB2 -->
     <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 h-full"> <!-- Added h-full to ensure content fills the height -->
         <div class="flex justify-between h-full items-center"> <!-- Added items-center to vertically center content -->
             <!-- Logo -->
@@ -14,6 +14,7 @@
                 <a href="{{ route('dashboard.index') }}" class="text-white hover:text-blue-200">Tableau de bord</a> <!-- Changed text color to white -->
                 <a href="{{ route('clients.index') }}" class="text-white hover:text-blue-200">Clients</a> <!-- Changed text color to white -->
                 <a href="{{ route('products.index') }}" class="text-white hover:text-blue-200">Produits</a> <!-- Changed text color to white -->
+                <a href="{{ route('categories.index') }}" class="text-white hover:text-blue-200">Catégories</a> <!-- Added Categories link -->
                 <a href="{{ route('invoices.index') }}" class="text-white hover:text-blue-200">Factures</a> <!-- Changed text color to white -->
 
                 <!-- Logout Button -->
@@ -42,6 +43,7 @@
             <a href="{{ route('dashboard.index') }}" class="block text-white hover:text-blue-200">Tableau de bord</a> <!-- Changed text color to white -->
             <a href="{{ route('clients.index') }}" class="block text-white hover:text-blue-200">Clients</a> <!-- Changed text color to white -->
             <a href="{{ route('products.index') }}" class="block text-white hover:text-blue-200">Produits</a> <!-- Changed text color to white -->
+            <a href="{{ route('categories.index') }}" class="block text-white hover:text-blue-200">Catégories</a> <!-- Added Categories link -->
             <a href="{{ route('invoices.index') }}" class="block text-white hover:text-blue-200">Factures</a> <!-- Changed text color to white -->
 
             <!-- Logout Button for Mobile -->

@@ -49,6 +49,20 @@
                            class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400" 
                            required>
                 </div>
+                <div class="mb-6">
+                    <label for="category_id" class="block text-sm font-medium text-gray-700">Catégorie</label>
+                    <select name="category_id" 
+                            id="category_id" 
+                            class="mt-2 block w-full px-4 py-2 border border-gray-300 rounded-lg shadow-sm focus:outline-none focus:ring-2 focus:ring-blue-400" 
+                            required>
+                        <option value="">Sélectionnez une catégorie</option>
+                        @foreach($categories as $category)
+                            <option value="{{ $category->id }}" {{ $product->category_id == $category->id ? 'selected' : '' }}>
+                                {{ $category->name }}
+                            </option>
+                        @endforeach
+                    </select>
+                </div>
                 <div class="flex justify-end">
                     <button type="submit" 
                             class="bg-blue-500 hover:bg-blue-600 text-white px-6 py-2 rounded-lg transition-colors duration-200 flex items-center">

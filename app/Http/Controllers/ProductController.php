@@ -1,6 +1,7 @@
 <?php
 namespace App\Http\Controllers;
 
+use App\Models\Category;
 use Illuminate\Http\Request;
 use App\Models\Product;
 
@@ -11,16 +12,17 @@ class ProductController extends Controller
      */
     public function index(Request $request)
     {
-        $query = Product::query();
+        // Start building the query
+        $query = Product::with('category'); // Eager load the category relationship
     
-        // Search by name
+        // Search by product name
         if ($request->has('search')) {
             $search = $request->input('search');
             $query->where('name', 'like', '%' . $search . '%');
         }
     
         // Paginate the results
-        $products = $query->paginate(50); // 10 items per page
+        $products = $query->paginate(10); // 10 items per page (adjust as needed)
     
         return view('products.index', compact('products'));
     }
@@ -30,7 +32,8 @@ class ProductController extends Controller
      */
     public function create()
     {
-        return view('products.create');
+        $categories = Category::all();
+        return view('products.create', compact('categories'));
     }
 
     /**
@@ -41,6 +44,7 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
+            'category_id' => 'required|exists:categories,id'
         ]);
 
         Product::create($request->all());
@@ -61,8 +65,10 @@ class ProductController extends Controller
      */
     public function edit(Product $product)
     {
-        return view('products.edit', compact('product'));
+        $categories = Category::all();
+        return view('products.edit', compact('product', 'categories'));
     }
+
 
     /**
      * Update the specified product in the database.
@@ -72,6 +78,7 @@ class ProductController extends Controller
         $request->validate([
             'name' => 'required|string|max:255',
             'price' => 'required|numeric|min:0',
+            'category_id' => 'required|exists:categories,id',
         ]);
 
         $product->update($request->all());

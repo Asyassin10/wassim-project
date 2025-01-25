@@ -6,10 +6,7 @@ use App\Http\Controllers\InvoiceController;
 use App\Http\Controllers\ClientController;
 use App\Http\Controllers\ProductController;
 use App\Http\Controllers\Auth\LoginController;
-
-
-
-
+use App\Http\Controllers\CategoryController;
 
 Route::middleware('auth')->group(function () {
     Route::get('/', function () {
@@ -44,3 +41,5 @@ Route::middleware('auth')->group(function () {
 Route::get('/login', [LoginController::class, 'showLoginForm'])->name('login');
 Route::post('/login', [LoginController::class, 'login']);
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+Route::resource('categories', CategoryController::class);

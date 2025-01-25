@@ -7,7 +7,7 @@
     <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
 </head>
 <style>
-    .text-blue{
+    .text-blue {
         color: #276BB2 !important;
     }
 </style>
@@ -21,10 +21,10 @@
             <h1 class="text-3xl font-bold mb-8 text-blue">Tableau de bord</h1>
 
             <!-- Section des Cartes -->
-            <div class="grid grid-cols-1 md:grid-cols-3 gap-6" style="">
+            <div class="grid grid-cols-1 md:grid-cols-3 gap-6">
                 <!-- Carte Clients -->
                 <div class="bg-white p-6 rounded-lg shadow-md" style="background-color: #F1AC0A;">
-                    <h2 class="text-xl font-semibold mb-2 text-blue ">Clients</h2>
+                    <h2 class="text-xl font-semibold mb-2 text-blue">Clients</h2>
                     <p class="text-4xl font-bold text-blue">{{ $clientCount }}</p>
                     <p class="text-sm text-blue mt-2">Nombre total de clients</p>
                     <a href="{{ route('clients.index') }}" class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Voir les Clients</a>
@@ -45,8 +45,15 @@
                     <p class="text-sm text-blue mt-2">Nombre total de factures</p>
                     <a href="{{ route('invoices.index') }}" class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Voir les Factures</a>
                 </div>
-            </div>
 
+                <!-- Carte Catégories -->
+                <div class="bg-white p-6 rounded-lg shadow-md" style="background-color: #F1AC0A;">
+                    <h2 class="text-xl font-semibold mb-2 text-blue">Catégories</h2>
+                    <p class="text-4xl font-bold text-blue">{{ $categoryCount }}</p>
+                    <p class="text-sm text-blue mt-2">Nombre total de catégories</p>
+                    <a href="{{ route('categories.index') }}" class="mt-4 inline-block bg-blue-500 text-white px-4 py-2 rounded-md hover:bg-blue-600">Voir les Catégories</a>
+                </div>
+            </div>
         </div>
     </div>
 

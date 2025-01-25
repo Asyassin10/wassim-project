@@ -11,9 +11,9 @@ class DatabaseSeeder extends Seeder
     /**
      * Seed the application's database.
      */
+
     public function run()
     {
-        \App\Models\Product::factory()->count(50)->create();
- 
+        $this->call([CategorySeeder::class, ProductSeeder::class]);
     }
 }
